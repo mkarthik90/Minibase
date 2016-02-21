@@ -64,7 +64,8 @@ public class LIFO extends Replacer {
 			}
 		}
 
-		return -1;
+		throw new BufferPoolExceededException(null,
+				"BUFMGR: BUFFER_EXCEEDED.");
 	}
 
 	public String name() {
@@ -94,6 +95,22 @@ public class LIFO extends Replacer {
 			}
 			frames[0] = frameToBeMoved;
 		}
+	}
+	
+	/**
+	 * Calling super class the same method Initializing the frames[] with number
+	 * of buffer allocated by buffer manager set number of frame used to zero
+	 * 
+	 * @param mgr
+	 *            a BufMgr object
+	 * @see BufMgr
+	 * @see Replacer
+	 */
+	public void setBufferManager(BufMgr mgr) {
+		super.setBufferManager(mgr);
+		//Assuming all frames are free while initializign
+		frames = new int[mgr.getNumBuffers()];
+		nframes = 0;
 	}
 
 }

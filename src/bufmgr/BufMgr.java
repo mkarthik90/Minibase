@@ -448,7 +448,7 @@ public class BufMgr implements GlobalConst {
 				replacer = new FIFO(this);
 			} 
 			else if (replacerArg.equalsIgnoreCase("LIFO")) {
-				replacer = new FIFO(this);
+				replacer = new LIFO(this);
 			} 
 			else if (replacerArg.equalsIgnoreCase("LRUK")) {
 				replacer = new LRUK(this, 3);
@@ -530,6 +530,7 @@ public class BufMgr implements GlobalConst {
 		if (frameNo < 0) { // Not in the buffer pool
 
 			frameNo = replacer.pick_victim(); // frameNo is pinned
+			//System.out.println("Frame No is replacer"+replacer+"  "+frameNo);
 			if (frameNo < 0) {
 				page = null;
 				throw new ReplacerException(null, "BUFMGR: REPLACER_ERROR.");

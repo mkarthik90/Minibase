@@ -42,7 +42,7 @@ public class FIFO extends Replacer {
 			}
 		}
 
-		return -1;
+		throw new BufferPoolExceededException(null, "BUFMGR: BUFFER_EXCEEDED.");
 
 	}
 
