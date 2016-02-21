@@ -368,6 +368,8 @@ class BMDriver extends TestDriver implements GlobalConst {
 	  pid.pid = pid.pid + 1 ) {
       
       try {
+    	  System.out.print("");
+    	  //System.out.println("ReplacerALgo:"+replacealgo[i]+" Page Id "+pid+" Page"+pg);
         SystemDefs.JavabaseBM.pinPage( pid, pg, /*emptyPage:*/ true );
       }
       catch (Exception e) { 
@@ -662,7 +664,7 @@ SystemDefs sysdef = new SystemDefs( dbpath, NUMBUF+20, NUMBUF, replacealgo[i]);
   
   
   
-  /*protected boolean test4 () {
+  protected boolean test4 () {
 	    
 	  
 	  
@@ -703,7 +705,7 @@ SystemDefs sysdef = new SystemDefs( dbpath, NUMBUF+20, NUMBUF, replacealgo[i]);
 	      {
 	    	  try
 	    	  {
-	    		  for (int i=0;i<numPages;i++)
+	    		  for (int i=0;i<numPages-1;i++)
 	    		  {
 	    			  pagenumber=frames[i];
 	    			 if(replacer.HIST(pagenumber,1)>System.currentTimeMillis())
@@ -716,6 +718,7 @@ SystemDefs sysdef = new SystemDefs( dbpath, NUMBUF+20, NUMBUF, replacealgo[i]);
 	    	  }
 	    	  catch(Exception e)
 	    	  {
+	    		  e.printStackTrace();
 	    		  status = FAIL;
 	    		  System.err.print ("Incorrect time reference\n");
 	    	  }

@@ -5,8 +5,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import chainexception.ChainException;
-
 public class LRUK extends Replacer {
 
 	int frames[];
@@ -46,16 +44,21 @@ public class LRUK extends Replacer {
 	}
 
 	private void update(int frameNo) {
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException ex) {
+			ex.printStackTrace();
+		}
 		long t = System.currentTimeMillis();
 		long correl_period_of_refd_page = 0;
-		if (t - last.get(frameNo) > correlated_reference_period) {
+		if (t - last.get(frameNo) >= correlated_reference_period) {
 			List historyDetailsList = HIST.get(frameNo);
 			long histFirstValueOfPage = (Long) historyDetailsList.get(1);
 			correl_period_of_refd_page = last.get(frameNo)
 					- histFirstValueOfPage;
 
 			LinkedList historyDetailsOfFrame = HIST.get(frameNo);
-			//TODO change 2 to 1
+			// TODO change 2 to 1
 			for (int i = 2; i < lastRef; i++) {
 				historyDetailsOfFrame.add(i,
 						(Long) historyDetailsOfFrame.get(i - 1)
@@ -80,9 +83,15 @@ public class LRUK extends Replacer {
 		int frame = 0;
 		int victim = -1;
 
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException ex) {
+			ex.printStackTrace();
+		}
+
 		if (nframes < numBuffers) {
-			
-			//INitialize HIST and LAST
+
+			// INitialize HIST and LAST
 			frame = nframes++;
 			frames[frame] = frame;
 			state_bit[frame].state = Pinned;
@@ -99,7 +108,7 @@ public class LRUK extends Replacer {
 
 				// Finding K backward distance for the frame
 				// Last Reference is the K value
-				//CHECK K -1
+				// CHECK K -1
 				long lastRefOfPage = (Long) historyOfReference.get(lastRef);
 				if (t - lastOfPage > correlated_reference_period
 						&& lastRefOfPage < min
@@ -118,8 +127,9 @@ public class LRUK extends Replacer {
 			(mgr.frameTable())[victim].pin();
 			return victim;
 		}
-		
-		throw new BufferPoolExceededException(null,"bufmgr.BufferPoolExceededException");
+
+		throw new BufferPoolExceededException(null,
+				"bufmgr.BufferPoolExceededException");
 	}
 
 	public String name() {
@@ -157,7 +167,7 @@ class LinkedHistMap<Integer, LinkedList> extends
 
 	public LinkedHistMap() {
 		for (int i = 0; i < 10; i++)
-			list.add((long)0);
+			list.add((long) 0);
 	}
 
 	@Override

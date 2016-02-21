@@ -6,7 +6,7 @@ public class BMTest1 {
 
      BMDriver bmt = new BMDriver();
      boolean dbstatus;
-
+     
      dbstatus = bmt.runTests();
 
      if (dbstatus != true) {
